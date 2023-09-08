@@ -52,15 +52,15 @@ class PersonControllerAdviceTest {
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+                Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody()))).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(responseEntity.getBody()).getDescription());
-        assertEquals(1, Objects.requireNonNull(responseEntity.getBody()).getErrors().size());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(1, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage,
-                Objects.requireNonNull(responseEntity.getBody()).getErrors().get(0).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
     }
 
     @Test
@@ -77,17 +77,17 @@ class PersonControllerAdviceTest {
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(responseEntity.getBody()).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(responseEntity.getBody()).getDescription());
-        assertEquals(2, Objects.requireNonNull(responseEntity.getBody()).getErrors().size());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(2, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage1,
-                Objects.requireNonNull(responseEntity.getBody()).getErrors().get(0).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
         assertEquals(exceptionMessage2,
-                Objects.requireNonNull(responseEntity.getBody()).getErrors().get(1).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(1).getDescription());
     }
 
     @Test
@@ -102,15 +102,15 @@ class PersonControllerAdviceTest {
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(responseEntity.getBody()).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(responseEntity.getBody()).getDescription());
-        assertEquals(1, Objects.requireNonNull(responseEntity.getBody()).getErrors().size());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(1, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage,
-                Objects.requireNonNull(responseEntity.getBody()).getErrors().get(0).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
     }
 
     @Test
@@ -119,14 +119,14 @@ class PersonControllerAdviceTest {
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
                 .handleDatabaseException();
 
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                Objects.requireNonNull(responseEntity.getBody()).getCode());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
         assertEquals(Constants.INTERNAL_SERVER_EX,
-                Objects.requireNonNull(responseEntity.getBody()).getMessage());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.INTERNAL_SERVER_DESC,
-                Objects.requireNonNull(responseEntity.getBody()).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
     @Test
@@ -138,10 +138,10 @@ class PersonControllerAdviceTest {
                 .handlePersonNotFound(new PersonNotFound(exceptionMessage));
 
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
-        assertEquals(HttpStatus.NOT_FOUND.value(), Objects.requireNonNull(responseEntity.getBody()).getCode());
-        assertEquals(Constants.NOT_FOUND_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
-        assertEquals(exceptionMessage, Objects.requireNonNull(responseEntity.getBody()).getDescription());
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.NOT_FOUND.value(), Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.NOT_FOUND_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
     @Test
@@ -153,11 +153,11 @@ class PersonControllerAdviceTest {
                 .handleBadRequestException(new BadRequestException(exceptionMessage));
 
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(responseEntity.getBody()).getCode());
-        assertEquals(Constants.BAD_REQUEST_DESC, Objects.requireNonNull(responseEntity.getBody()).getMessage());
-        assertEquals(exceptionMessage, Objects.requireNonNull(responseEntity.getBody()).getDescription());
+                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.BAD_REQUEST_DESC, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
     @Test
@@ -171,10 +171,10 @@ class PersonControllerAdviceTest {
 
         assertNotNull(responseEntity);
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
-        assertNotNull(responseEntity.getBody());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), responseEntity.getBody().getCode());
-        assertEquals(Constants.INTERNAL_SERVER_EX, responseEntity.getBody().getMessage());
-        assertEquals(exceptionMessage, responseEntity.getBody().getDescription());
+        assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), Objects.requireNonNull(responseEntity.getBody()).getCode());
+        assertEquals(Constants.INTERNAL_SERVER_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
 }
