@@ -52,17 +52,18 @@ To make the HTTP requests below, the [httpie](https://httpie.io) tool was used:
 - Create a person
 
 ```
-$ http POST :9999/pessoas apelido="nickname" nome="My Name" nascimento="2000-01-22" stack:='["Java","C", "Python"]'
+$ http POST :9999/pessoas apelido="nickname" nome="My Name" nascimento="2003-01-22" stack:='["Java", "C", "Python"]'
 
 [
     {
         "id": "b987f790-7c92-42ca-ab99-2358adcd5e38",
-        "nome": "Weverson Lemos",
-        "apelido": "verso",
+        "nome": "My Name",
+        "apelido": "nickname",
         "nascimento": "2003-01-22",
         "stack": [
             "Java",
-            "C"
+            "C",
+            "Python"
         ]
     }
 ]
@@ -76,12 +77,13 @@ $ http GET :9999/pessoas/{id}
 [
     {
         "id": "b987f790-7c92-42ca-ab99-2358adcd5e38",
-        "nome": "Weverson Lemos",
-        "apelido": "verso",
+        "nome": "My Name",
+        "apelido": "nickname",
         "nascimento": "2003-01-22",
         "stack": [
             "Java",
-            "C"
+            "C",
+            "Python"
         ]
     }
 ]
