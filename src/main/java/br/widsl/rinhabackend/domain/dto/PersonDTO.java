@@ -17,7 +17,7 @@ import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.deserializers.StringArrayDeserializer;
 import jakarta.validation.constraints.NotBlank;
 
-@RedisHash(value = "person", timeToLive = Constants.TTL_REDIS)
+@RedisHash(timeToLive = Constants.TTL_REDIS)
 public class PersonDTO implements Serializable {
 
     @Serial

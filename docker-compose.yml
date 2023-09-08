@@ -44,8 +44,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.15"
-          memory: "0.4GB"
+          cpus: "0.20"
+          memory: "0.7GB"
 
   postgres:
     image: postgres:latest
@@ -67,7 +67,7 @@ services:
       resources:
         limits:
           cpus: "0.9"
-          memory: "1.0GB"
+          memory: "0.7GB"
 
   redis:
     image: redis:latest
@@ -80,7 +80,7 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.15"
+          cpus: "0.10"
           memory: "0.2GB"
 
 volumes:

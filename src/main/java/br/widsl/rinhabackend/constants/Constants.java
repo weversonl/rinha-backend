@@ -8,7 +8,7 @@ public class Constants {
 
     public static final int ARRAY_ITEM_SIZE = 32;
 
-    public static final int TTL_REDIS = 7200;
+    public static final int TTL_REDIS = 120;
 
     public static final String ARRAY_ITEM_MESSAGE = "Invalid vector elements in stack field. Each item can be up to 32 characters";
 
