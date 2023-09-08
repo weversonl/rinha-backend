@@ -13,8 +13,8 @@ import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
 import br.widsl.rinhabackend.domain.entity.PersonEntity;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import br.widsl.rinhabackend.exception.impl.DatabaseException;
-import br.widsl.rinhabackend.exception.impl.ExistentPersonException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
 import br.widsl.rinhabackend.mapper.PersonMapper;
 import br.widsl.rinhabackend.repository.PersonRepository;
@@ -38,7 +38,15 @@ public class PersonServiceImpl implements PersonService {
     @Cacheable("persons-cache")
     public PersonDTO findById(String id) {
 
-        Optional<PersonEntity> entity = personRepository.findById(UUID.fromString(id));
+        UUID uuid;
+
+        try {
+            uuid = UUID.fromString(id);
+        } catch (IllegalArgumentException e) {
+            throw new BadRequestException(Constants.INVALID_ID);
+        }
+
+        Optional<PersonEntity> entity = personRepository.findById(uuid);
 
         return entity.map(PersonMapper::parseDTO)
                 .orElseThrow(() -> new PersonNotFound(Constants.EMPTY_PERSON.formatted(id)));
@@ -71,14 +79,14 @@ public class PersonServiceImpl implements PersonService {
         try {
 
             findBySurname(personDTO.getSurname()).ifPresent(x -> {
-                throw new ExistentPersonException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
+                throw new BadRequestException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
             });
 
             PersonEntity saved = personRepository.save(PersonMapper.parseEntity(personDTO));
             personDTO.setId(saved.getId());
             return personDTO;
 
-        } catch (ExistentPersonException e) {
+        } catch (BadRequestException e) {
             throw e;
         } catch (Exception e) {
             throw new DatabaseException(Constants.SAVE_ERROR.formatted(personDTO.getSurname()));

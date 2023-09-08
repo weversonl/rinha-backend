@@ -28,6 +28,8 @@ public class Constants {
 
     public static final String BAD_REQUEST_DESC = "Unprocessable Entity/Content";
 
+    public static final String INVALID_ID = "Invalid person ID";
+
     public static final String NOT_FOUND_EX = "Not Found";
 
     public static final String INTERNAL_SERVER_EX = "Internal Server Error";

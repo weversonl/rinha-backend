@@ -5,7 +5,7 @@ import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
 import br.widsl.rinhabackend.domain.entity.PersonEntity;
 import br.widsl.rinhabackend.exception.impl.DatabaseException;
-import br.widsl.rinhabackend.exception.impl.ExistentPersonException;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
 import br.widsl.rinhabackend.repository.PersonRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -107,7 +107,7 @@ class PersonServiceImplTest {
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(ExistentPersonException.class)
+                .isInstanceOf(BadRequestException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 

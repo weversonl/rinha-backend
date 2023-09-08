@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.exception.impl.DatabaseException;
-import br.widsl.rinhabackend.exception.impl.ExistentPersonException;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
 import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
 import br.widsl.rinhabackend.exception.model.ErrorValidation;
@@ -31,8 +31,8 @@ public class PersonControllerAdvice {
     }
 
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    @ExceptionHandler(ExistentPersonException.class)
-    public ResponseEntity<ApiErrorResponse> handleExistentPersonException(ExistentPersonException exception) {
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ApiErrorResponse> handleBadRequestException(BadRequestException exception) {
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ApiErrorResponse.builder()
                         .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
