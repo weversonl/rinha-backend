@@ -1,0 +1,94 @@
+version: '3.5'
+services:
+
+  api1: # API - Instância 01
+    build: .
+    hostname: api1
+    depends_on:
+      - postgres
+      - redis
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.4GB'
+
+  api2: # API - Instância 02
+    build: .
+    hostname: api2
+    depends_on:
+      - postgres
+      - redis
+    expose:
+      - "8080"
+    env_file:
+      - .env
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.4GB'
+
+  nginx: # Load Balancer
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api1
+      - api2
+    ports:
+      - "9999:9999"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.5GB'
+
+  postgres:
+    image: postgres:latest
+    container_name: rinhadb
+    environment:
+      POSTGRES_DB: rinhadb
+      POSTGRES_USER: rinha
+      POSTGRES_PASSWORD: rinha
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgresql.conf:/docker-entrypoint-initdb.d/postgresql.conf
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres-data:/var/lib/postgresql/data
+
+    command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
+
+    deploy:
+        resources:
+          limits:
+            cpus: '0.9'
+            memory: '1.4GB'
+
+  redis:
+    image: redis:latest
+    container_name: rinhacache
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --save "" --appendonly no --maxclients 20000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: '0.3GB'
+
+volumes:
+  postgres-data:
+  redis-data:
+
+networks:
+  default:
+    driver: bridge
+    name: rinha-nt

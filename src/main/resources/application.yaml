@@ -1,0 +1,18 @@
+spring:
+
+  datasource:
+    name: rinha-datasource
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
+    driver-class-name: ${DB_DRIVER}
+
+  cache:
+    type: ${CACHE_TYPE}
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      database: ${REDIS_DB}
+      timeout: ${REDIS_TIMEOUT}
