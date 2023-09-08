@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ import br.widsl.rinhabackend.service.PersonService;
 
 @Service
 public class PersonServiceImpl implements PersonService {
+
+    private static final Logger log = LoggerFactory.getLogger(PersonServiceImpl.class);
 
     private final PersonRepository personRepository;
 
@@ -43,6 +47,7 @@ public class PersonServiceImpl implements PersonService {
         try {
             uuid = UUID.fromString(id);
         } catch (IllegalArgumentException e) {
+            log.error("Invalid ID for -> %s".formatted(id));
             throw new BadRequestException(Constants.INVALID_ID);
         }
 
@@ -79,6 +84,7 @@ public class PersonServiceImpl implements PersonService {
         try {
 
             findBySurname(personDTO.getSurname()).ifPresent(x -> {
+                log.error("Existent person for surname -> %s".formatted(x.getSurname()));
                 throw new BadRequestException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
             });
 
@@ -87,8 +93,10 @@ public class PersonServiceImpl implements PersonService {
             return personDTO;
 
         } catch (BadRequestException e) {
+            log.error("Bad Request for surname -> %s".formatted(personDTO.getSurname()));
             throw e;
         } catch (Exception e) {
+            log.error("Database error: ", e.getCause());
             throw new DatabaseException(Constants.SAVE_ERROR.formatted(personDTO.getSurname()));
         }
 

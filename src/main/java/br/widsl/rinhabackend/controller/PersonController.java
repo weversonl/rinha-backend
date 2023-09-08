@@ -52,7 +52,7 @@ public class PersonController {
 
     @GetMapping("/pessoas")
     public ResponseEntity<List<PersonDTO>> getPersonByTerm(@RequestParam(name = "t", required = false) String term) {
-        log.info("Get by Term endpoint | Id -> {}", term);
+        log.info("Get by Term endpoint | term -> {}", term);
         List<PersonDTO> response = personService.findByTerm(term);
         return ResponseEntity.ok(response);
     }

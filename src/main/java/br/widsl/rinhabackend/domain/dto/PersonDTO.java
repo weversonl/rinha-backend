@@ -4,6 +4,9 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.UUID;
 
+import br.widsl.rinhabackend.deserializers.StringArrayDeserializer;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.redis.core.RedisHash;
 
@@ -22,16 +25,21 @@ public class PersonDTO implements Serializable {
 
     @NotBlank(message = Constants.FIELD_REQUIRED)
     @Length(max = 32, message = Constants.FIELD_SIZE)
+    @JsonProperty("apelido")
     private String surname;
 
     @NotBlank(message = Constants.FIELD_REQUIRED)
     @Length(max = 100, message = Constants.FIELD_SIZE)
+    @JsonProperty("nome")
     private String name;
 
     @BirthDate
+    @JsonProperty("nascimento")
     private String birth;
 
     @StringArray
+    @JsonProperty("stack")
+    @JsonDeserialize(using = StringArrayDeserializer.class)
     private String[] stack;
 
     public PersonDTO(String surname, String name, String birth, String[] stack) {
