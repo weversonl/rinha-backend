@@ -15,7 +15,7 @@ services:
       resources:
         limits:
           cpus: '0.15'
-          memory: '0.4GB'
+          memory: '0.6GB'
 
   api2: # API - Instância 02
     build: .
@@ -31,7 +31,7 @@ services:
       resources:
         limits:
           cpus: '0.15'
-          memory: '0.4GB'
+          memory: '0.6GB'
 
   nginx: # Load Balancer
     image: nginx:latest
@@ -68,7 +68,7 @@ services:
         resources:
           limits:
             cpus: '0.9'
-            memory: '1.4GB'
+            memory: '1.0GB'
 
   redis:
     image: redis:latest

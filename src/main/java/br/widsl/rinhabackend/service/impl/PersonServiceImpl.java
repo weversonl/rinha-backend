@@ -1,6 +1,7 @@
 package br.widsl.rinhabackend.service.impl;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -49,6 +50,9 @@ public class PersonServiceImpl implements PersonService {
     public List<PersonDTO> findByTerm(String term) {
 
         List<PersonEntity> entity;
+
+        if (term == null || term.isEmpty())
+            return new ArrayList<>();
 
         if (term.matches("\\d{4}-\\d{2}-\\d{2}"))
             entity = personRepository.findByDate(LocalDate.parse(term));

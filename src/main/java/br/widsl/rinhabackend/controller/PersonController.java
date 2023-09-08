@@ -50,7 +50,7 @@ public class PersonController {
     }
 
     @GetMapping("/pessoas")
-    public ResponseEntity<List<PersonDTO>> getPersonByTerm(@RequestParam(name = "t") String term) {
+    public ResponseEntity<List<PersonDTO>> getPersonByTerm(@RequestParam(name = "t", required = false) String term) {
         List<PersonDTO> response = personService.findByTerm(term);
         return ResponseEntity.ok(response);
     }
