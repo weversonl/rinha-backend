@@ -82,17 +82,14 @@ class PersonServiceImplTest {
 
     @Test
     void testPersonCountWhenPersonsExistThenReturnCorrectCount() {
-        List<PersonEntity> persons = List.of(new PersonEntity(), new PersonEntity());
-        when(personRepository.findAll()).thenReturn(persons);
-
+        when(personRepository.findAndCountPersons()).thenReturn(2);
         PersonCountDTO result = personService.personCount();
-
-        assertEquals(persons.size(), result.getPersons());
+        assertEquals(2, result.getPersons());
     }
 
     @Test
     void testPersonCountWhenNoPersonsExistThenReturnZero() {
-        when(personRepository.findAll()).thenReturn(List.of());
+        when(personRepository.findAndCountPersons()).thenReturn(0);
 
         PersonCountDTO result = personService.personCount();
 
@@ -166,24 +163,15 @@ class PersonServiceImplTest {
 
     @Test
     void testPersonCountWhenRepositoryReturnsPersonsThenCorrectCountIsReturned() {
-
-        List<PersonEntity> persons = List.of(new PersonEntity(), new PersonEntity());
-        when(personRepository.findAll()).thenReturn(persons);
-
+        when(personRepository.findAndCountPersons()).thenReturn(2);
         PersonCountDTO result = personService.personCount();
-
-        assertEquals(persons.size(), result.getPersons());
+        assertEquals(2, result.getPersons());
     }
 
     @Test
     void testPersonCountWhenRepositoryReturnsNoPersonsThenCountIsZero() {
-
-        when(personRepository.findAll()).thenReturn(List.of());
-
-
+        when(personRepository.findAndCountPersons()).thenReturn(0);
         PersonCountDTO result = personService.personCount();
-
-
         assertEquals(0, result.getPersons());
     }
 

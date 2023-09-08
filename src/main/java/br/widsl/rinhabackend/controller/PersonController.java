@@ -73,7 +73,7 @@ public class PersonController {
 
     @GetMapping("/contagem-pessoas")
     public ResponseEntity<PersonCountDTO> personCount() {
-        log.info("Person Count Term endpoint");
+        log.info("Person Count endpoint");
         return ResponseEntity.ok(personService.personCount());
     }
 

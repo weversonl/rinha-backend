@@ -109,8 +109,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public PersonCountDTO personCount() {
-        List<PersonEntity> result = personRepository.findAll();
-        return new PersonCountDTO(result.size());
+        return new PersonCountDTO(personRepository.findAndCountPersons());
     }
 
 }

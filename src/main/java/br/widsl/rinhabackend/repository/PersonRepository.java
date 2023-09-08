@@ -18,14 +18,15 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
     Optional<PersonEntity> findBySurname(String surname);
 
     @Transactional(readOnly = true)
-    List<PersonEntity> findAll();
+    @Query("SELECT COUNT(*) FROM persons")
+    Integer findAndCountPersons();
 
     @Transactional(readOnly = true)
     Optional<PersonEntity> findById(UUID id);
 
     @Transactional(readOnly = true)
     @Query("""
-                SELECT * FROM persons p
+                SELECT p.name, p.surname, p.birth, p.stack FROM persons p
                 WHERE p.name LIKE '%' || :termo || '%'
                 OR p.surname LIKE '%' || :termo || '%'
                 OR array_to_string(p.stack, ',') ILIKE '%' || :termo || '%'
@@ -33,7 +34,7 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
     List<PersonEntity> findByTerm(@Param("termo") String term);
 
     @Transactional(readOnly = true)
-    @Query("SELECT * FROM persons p WHERE p.birth = :date")
+    @Query("SELECT p.name, p.surname, p.birth, p.stack FROM persons p WHERE p.birth = :date")
     List<PersonEntity> findByDate(@Param("date") LocalDate date);
 
 }
