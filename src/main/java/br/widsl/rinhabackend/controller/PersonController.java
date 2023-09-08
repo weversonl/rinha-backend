@@ -1,6 +1,8 @@
 package br.widsl.rinhabackend.controller;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
+import br.widsl.rinhabackend.exception.impl.TechnicalException;
 import br.widsl.rinhabackend.service.PersonService;
 import jakarta.validation.Valid;
 
@@ -34,13 +37,24 @@ public class PersonController {
     public ResponseEntity<PersonDTO> savePerson(@RequestBody @Valid PersonDTO requestDTO) {
 
         log.info("Save endpoint | Request -> {}", requestDTO);
-        PersonDTO response = personService.savePerson(requestDTO);
+        CompletableFuture<PersonDTO> asyncResponse = personService.savePerson(requestDTO);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Location", "/pessoas/%s".formatted(response.getId()));
+        try {
 
-        return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
+            PersonDTO response = asyncResponse.get();
 
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/pessoas/%s".formatted(response.getId()));
+
+            return new ResponseEntity<>(response, headers, HttpStatus.CREATED);
+
+        } catch (ExecutionException | InterruptedException e) {
+
+            log.error("Error during execution of asynchronous operation", e.getCause());
+            Thread.currentThread().interrupt();
+            throw new TechnicalException("Error during data processing");
+
+        }
     }
 
     @GetMapping("/pessoas/{id}")

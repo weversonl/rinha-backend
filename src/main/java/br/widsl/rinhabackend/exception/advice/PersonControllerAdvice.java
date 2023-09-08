@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.exception.impl.DatabaseException;
 import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import br.widsl.rinhabackend.exception.impl.DatabaseException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
+import br.widsl.rinhabackend.exception.impl.TechnicalException;
 import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
 import br.widsl.rinhabackend.exception.model.ErrorValidation;
 
@@ -49,6 +50,17 @@ public class PersonControllerAdvice {
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
                         .message(Constants.INTERNAL_SERVER_EX)
                         .description(Constants.INTERNAL_SERVER_DESC)
+                        .build());
+    }
+
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ExceptionHandler(TechnicalException.class)
+    public ResponseEntity<ApiErrorResponse> handleTechnicalException(TechnicalException exception) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ApiErrorResponse.builder()
+                        .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .message(Constants.INTERNAL_SERVER_EX)
+                        .description(exception.getMessage())
                         .build());
     }
 

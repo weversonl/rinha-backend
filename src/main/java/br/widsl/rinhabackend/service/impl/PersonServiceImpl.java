@@ -5,10 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import br.widsl.rinhabackend.constants.Constants;
@@ -23,6 +26,7 @@ import br.widsl.rinhabackend.repository.PersonRepository;
 import br.widsl.rinhabackend.service.PersonService;
 
 @Service
+@CacheConfig(cacheNames = "persons-cache")
 public class PersonServiceImpl implements PersonService {
 
     private static final Logger log = LoggerFactory.getLogger(PersonServiceImpl.class);
@@ -33,13 +37,13 @@ public class PersonServiceImpl implements PersonService {
         this.personRepository = personRepository;
     }
 
-    @Cacheable("persons-cache")
+    @Cacheable("#surname")
     private Optional<PersonEntity> findBySurname(String surname) {
         return personRepository.findBySurname(surname);
     }
 
     @Override
-    @Cacheable("persons-cache")
+    @Cacheable("#id")
     public PersonDTO findById(String id) {
 
         UUID uuid;
@@ -59,7 +63,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable("persons-cache")
+    @Cacheable("#term")
     public List<PersonDTO> findByTerm(String term) {
 
         List<PersonEntity> entity;
@@ -79,7 +83,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public PersonDTO savePerson(PersonDTO personDTO) {
+    @Async
+    public CompletableFuture<PersonDTO> savePerson(PersonDTO personDTO) {
 
         try {
 
@@ -90,7 +95,7 @@ public class PersonServiceImpl implements PersonService {
 
             PersonEntity saved = personRepository.save(PersonMapper.parseEntity(personDTO));
             personDTO.setId(saved.getId());
-            return personDTO;
+            return CompletableFuture.completedFuture(personDTO);
 
         } catch (BadRequestException e) {
             log.error("Bad Request for surname -> %s".formatted(personDTO.getSurname()));

@@ -25,11 +25,11 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
 
     @Transactional(readOnly = true)
     @Query("""
-        SELECT * FROM persons p
-        WHERE p.name LIKE '%' || :termo || '%'
-        OR p.surname LIKE '%' || :termo || '%'
-        OR array_to_string(p.stack, ',') ILIKE '%' || :termo || '%'
-    """)
+                SELECT * FROM persons p
+                WHERE p.name LIKE '%' || :termo || '%'
+                OR p.surname LIKE '%' || :termo || '%'
+                OR array_to_string(p.stack, ',') ILIKE '%' || :termo || '%'
+            """)
     List<PersonEntity> findByTerm(@Param("termo") String term);
 
     @Transactional(readOnly = true)

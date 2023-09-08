@@ -1,5 +1,4 @@
 spring:
-
   datasource:
     name: rinha-datasource
     url: ${DB_URL}

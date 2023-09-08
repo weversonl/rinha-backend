@@ -2,17 +2,19 @@ package br.widsl.rinhabackend.domain.dto;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.UUID;
 
-import br.widsl.rinhabackend.deserializers.StringArrayDeserializer;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.redis.core.RedisHash;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.widsl.rinhabackend.annotations.BirthDate;
 import br.widsl.rinhabackend.annotations.StringArray;
 import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.deserializers.StringArrayDeserializer;
 import jakarta.validation.constraints.NotBlank;
 
 @RedisHash(value = "person", timeToLive = Constants.TTL_REDIS)
@@ -91,6 +93,17 @@ public class PersonDTO implements Serializable {
 
     public void setStack(String[] stack) {
         this.stack = stack;
+    }
+
+    @Override
+    public String toString() {
+        return "PersonDTO{" +
+                "id=" + id +
+                ", surname='" + surname + '\'' +
+                ", name='" + name + '\'' +
+                ", birth='" + birth + '\'' +
+                ", stack=" + Arrays.toString(stack) +
+                '}';
     }
 
 }

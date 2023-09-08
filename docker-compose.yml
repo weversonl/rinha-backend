@@ -1,6 +1,5 @@
-version: '3.5'
+version: "3.5"
 services:
-
   api1: # API - Instância 01
     build: .
     hostname: api1
@@ -14,8 +13,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.15'
-          memory: '0.6GB'
+          cpus: "0.15"
+          memory: "0.7GB"
 
   api2: # API - Instância 02
     build: .
@@ -30,8 +29,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.15'
-          memory: '0.6GB'
+          cpus: "0.15"
+          memory: "0.7GB"
 
   nginx: # Load Balancer
     image: nginx:latest
@@ -45,8 +44,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.15'
-          memory: '0.5GB'
+          cpus: "0.15"
+          memory: "0.4GB"
 
   postgres:
     image: postgres:latest
@@ -65,10 +64,10 @@ services:
     command: postgres -c config_file=/docker-entrypoint-initdb.d/postgresql.conf
 
     deploy:
-        resources:
-          limits:
-            cpus: '0.9'
-            memory: '1.0GB'
+      resources:
+        limits:
+          cpus: "0.9"
+          memory: "1.0GB"
 
   redis:
     image: redis:latest
@@ -81,8 +80,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.15'
-          memory: '0.3GB'
+          cpus: "0.15"
+          memory: "0.2GB"
 
 volumes:
   postgres-data:

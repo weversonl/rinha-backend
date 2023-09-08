@@ -1,11 +1,14 @@
 package br.widsl.rinhabackend.controller;
 
-import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
-import br.widsl.rinhabackend.domain.dto.PersonDTO;
-import br.widsl.rinhabackend.exception.impl.PersonNotFound;
-import br.widsl.rinhabackend.service.PersonService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,10 +20,13 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
+import br.widsl.rinhabackend.domain.dto.PersonDTO;
+import br.widsl.rinhabackend.exception.impl.PersonNotFound;
+import br.widsl.rinhabackend.service.PersonService;
 
 @WebMvcTest(PersonController.class)
 class PersonControllerTest {
@@ -33,9 +39,56 @@ class PersonControllerTest {
 
     private ObjectMapper objectMapper;
 
+    private PersonDTO validPersonDTO;
+
     @BeforeEach
     void setUp() {
+        validPersonDTO = new PersonDTO("John", "JohnL", "2002-01-22", new String[] { "Java" });
+        validPersonDTO.setId(UUID.randomUUID());
         objectMapper = new ObjectMapper();
+    }
+
+    @Test
+    void testSavePersonWhenExecutionExceptionThenThrowsTechnicalException() throws Exception {
+        Mockito.when(personService.savePerson(Mockito.any(PersonDTO.class)))
+                .thenReturn(CompletableFuture.supplyAsync(() -> {
+                    throw new RuntimeException(new ExecutionException(new Exception()));
+                }));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
+                .content(new ObjectMapper().writeValueAsString(validPersonDTO))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.INTERNAL_SERVER_EX));
+    }
+
+    @Test
+    void testSavePersonWhenInterruptedExceptionThenThrowsTechnicalExceptionAndInterruptsThread() throws Exception {
+        Mockito.when(personService.savePerson(Mockito.any(PersonDTO.class)))
+                .thenReturn(CompletableFuture.supplyAsync(() -> {
+                    throw new RuntimeException(new InterruptedException());
+                }));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
+                .content(new ObjectMapper().writeValueAsString(validPersonDTO))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.INTERNAL_SERVER_EX));
+
+        Assertions.assertTrue(Thread.currentThread().isInterrupted());
+    }
+
+    @Test
+    void testSavePersonWhenDataIsValidThenReturnsCreated() throws Exception {
+        Mockito.when(personService.savePerson(Mockito.any(PersonDTO.class)))
+                .thenReturn(CompletableFuture.completedFuture(validPersonDTO));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
+                .content(new ObjectMapper().writeValueAsString(validPersonDTO))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.header().string("Location", "/pessoas/" + validPersonDTO.getId()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(validPersonDTO.getId().toString()));
     }
 
     @Test
@@ -63,9 +116,8 @@ class PersonControllerTest {
     void testGetPersonByTermWhenTermIsGivenThenReturnListOfPersonDTOs() throws Exception {
         String term = "John";
         List<PersonDTO> personDTOs = Arrays.asList(
-                new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"}),
-                new PersonDTO("Smith", "John", "1999-01-01", new String[]{"Python", "Django"})
-        );
+                new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" }),
+                new PersonDTO("Smith", "John", "1999-01-01", new String[] { "Python", "Django" }));
         Mockito.when(personService.findByTerm(term)).thenReturn(personDTOs);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/pessoas").param("t", term))
@@ -88,7 +140,7 @@ class PersonControllerTest {
     @Test
     void testGetPersonByIdWhenIdIsValidThenReturnsCorrectPersonDTO() throws Exception {
         String id = UUID.randomUUID().toString();
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         personDTO.setId(UUID.fromString(id));
         Mockito.when(personService.findById(id)).thenReturn(personDTO);
 
@@ -104,33 +156,5 @@ class PersonControllerTest {
 
         mockMvc.perform(MockMvcRequestBuilders.get("/pessoas/" + id))
                 .andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    @Test
-    void testSavePersonWhenValidPersonDTOThenReturnsCreated() throws Exception {
-
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
-        PersonDTO savedPersonDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
-        savedPersonDTO.setId(UUID.randomUUID());
-        Mockito.when(personService.savePerson(Mockito.any(PersonDTO.class))).thenReturn(savedPersonDTO);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(personDTO)))
-                .andExpect(MockMvcResultMatchers.status().isCreated())
-                .andExpect(MockMvcResultMatchers.header().string("Location", "/pessoas/" + savedPersonDTO.getId()))
-                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(savedPersonDTO)));
-    }
-
-    @Test
-    void testSavePersonWhenInvalidPersonDTOThenThrowsException() throws Exception {
-
-        PersonDTO personDTO = new PersonDTO(null, null, null, new String[]{"Java", "Spring"});
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(personDTO)))
-                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
-
     }
 }

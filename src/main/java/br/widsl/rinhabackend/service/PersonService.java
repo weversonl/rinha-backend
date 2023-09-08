@@ -1,6 +1,7 @@
 package br.widsl.rinhabackend.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
@@ -11,7 +12,7 @@ public interface PersonService {
 
     List<PersonDTO> findByTerm(String term);
 
-    PersonDTO savePerson(PersonDTO personDTO);
+    CompletableFuture<PersonDTO> savePerson(PersonDTO personDTO);
 
     PersonCountDTO personCount();
 
