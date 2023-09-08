@@ -25,7 +25,7 @@ public class DateValidator implements ConstraintValidator<BirthDate, String> {
     }
 
     private boolean validateStringPattern(String date) {
-        return date.matches("\\d{4}-\\d{2}-\\d{2}");
+        return date.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][\\d]|3[01])$");
     }
 
 }
