@@ -1,5 +1,7 @@
 package br.widsl.rinhabackend.annotations.impl;
 
+import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
+
 import java.time.LocalDate;
 
 import br.widsl.rinhabackend.annotations.BirthDate;
@@ -25,7 +27,7 @@ public class DateValidator implements ConstraintValidator<BirthDate, String> {
     }
 
     private boolean validateStringPattern(String date) {
-        return date.matches("^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][\\d]|3[01])$");
+        return DATE_PATTERN.matcher(date).matches();
     }
 
 }

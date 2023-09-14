@@ -1,5 +1,7 @@
 package br.widsl.rinhabackend.service.impl;
 
+import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +73,7 @@ public class PersonServiceImpl implements PersonService {
         if (term == null || term.isEmpty())
             return new ArrayList<>();
 
-        if (term.matches("\\d{4}-\\d{2}-\\d{2}"))
+        if (DATE_PATTERN.matcher(term).matches())
             entity = personRepository.findByDate(LocalDate.parse(term));
         else
             entity = personRepository.findByTerm(term);
