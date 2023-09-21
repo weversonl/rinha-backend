@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import br.widsl.rinhabackend.annotations.BirthDate;
 import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -21,7 +21,7 @@ public class DateValidator implements ConstraintValidator<BirthDate, String> {
                 LocalDate date = LocalDate.parse(value);
                 return !date.isAfter(LocalDate.now());
             } catch (DateTimeException e) {
-                throw new BadRequestException(Constants.INVALID_DATE);
+                throw new UnprocessableEntityException(Constants.INVALID_DATE);
             }
 
         }

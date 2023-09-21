@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheConfig;
@@ -41,8 +42,8 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Cacheable("#surname")
-    private Optional<PersonEntity> findBySurname(String surname) {
-        return personRepository.findBySurname(surname);
+    private boolean findBySurname(String surname) {
+        return personRepository.findBySurname(surname).isPresent();
     }
 
     @Override
@@ -91,16 +92,16 @@ public class PersonServiceImpl implements PersonService {
 
         try {
 
-            findBySurname(personDTO.getSurname()).ifPresent(x -> {
-                log.error("Existent person for surname -> %s".formatted(x.getSurname()));
-                throw new DatabaseException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
-            });
+            if (findBySurname(personDTO.getSurname())) {
+                log.error("Existent person for surname -> %s".formatted(personDTO.getSurname()));
+                throw new UnprocessableEntityException(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
+            }
 
             personDTO.setId(UUID.randomUUID());
             personRepository.save(PersonMapper.parseEntity(personDTO));
             return CompletableFuture.completedFuture(personDTO);
 
-        } catch (DatabaseException e) {
+        } catch (UnprocessableEntityException e) {
             throw e;
         } catch (Exception e) {
             log.error("Database error: ", e.getCause());

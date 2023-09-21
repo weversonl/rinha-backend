@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
-import br.widsl.rinhabackend.exception.impl.TechnicalException;
 import br.widsl.rinhabackend.service.PersonService;
 import jakarta.validation.Valid;
 
@@ -51,7 +50,7 @@ public class PersonController {
 
             log.error("Error during execution of asynchronous operation", e.getCause());
             Thread.currentThread().interrupt();
-            throw new TechnicalException("Error during data processing");
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
 
         }
     }

@@ -15,7 +15,8 @@ import br.widsl.rinhabackend.domain.entity.PersonEntity;
 public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
 
     @Transactional(readOnly = true)
-    Optional<PersonEntity> findBySurname(String surname);
+    @Query("SELECT p.surname FROM persons p WHERE p.surname = :surname")
+    Optional<String> findBySurname(@Param("surname") String surname);
 
     @Transactional(readOnly = true)
     @Query("SELECT COUNT(1) FROM persons")

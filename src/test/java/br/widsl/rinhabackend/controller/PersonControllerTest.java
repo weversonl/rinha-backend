@@ -22,7 +22,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
@@ -58,8 +57,7 @@ class PersonControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
                 .content(new ObjectMapper().writeValueAsString(validPersonDTO))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.DATABASE_EX));
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
     }
 
     @Test
@@ -72,8 +70,7 @@ class PersonControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/pessoas")
                 .content(new ObjectMapper().writeValueAsString(validPersonDTO))
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isInternalServerError())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.DATABASE_EX));
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity());
 
         Assertions.assertTrue(Thread.currentThread().isInterrupted());
     }

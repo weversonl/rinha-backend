@@ -16,6 +16,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +28,6 @@ import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
 import br.widsl.rinhabackend.domain.entity.PersonEntity;
-import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import br.widsl.rinhabackend.exception.impl.DatabaseException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
 import br.widsl.rinhabackend.repository.PersonRepository;
@@ -61,11 +61,12 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenSurnameIsNotUniqueThenThrowBadRequestException() {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        String personEntity = "surname";
+
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(DatabaseException.class)
+                .isInstanceOf(UnprocessableEntityException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 
@@ -141,9 +142,8 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenPersonDoesNotExistThenReturnPerson() throws ExecutionException, InterruptedException {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
-        when(personRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
         CompletableFuture<PersonDTO> result = personService.savePerson(personDTO);
 
@@ -153,11 +153,11 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenPersonExistsThenThrowBadRequestException() {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        String personEntity = "surname";
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(DatabaseException.class)
+                .isInstanceOf(UnprocessableEntityException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 
@@ -179,11 +179,11 @@ class PersonServiceImplTest {
     void testSavePersonWhenSurnameExistsThenThrowsExistentPersonException() {
 
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        String personEntity = "surname";
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(DatabaseException.class)
+                .isInstanceOf(UnprocessableEntityException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 

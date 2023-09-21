@@ -16,6 +16,8 @@ public class Constants {
 
     public static final int TTL_REDIS = 120;
 
+    public static final int BATCH_TIME = 2000;
+
     public static final String ARRAY_ITEM_MESSAGE = "Invalid vector elements in stack field. Each item can be up to 32 characters";
 
     public static final String FIELD_REQUIRED = "%s is required";
