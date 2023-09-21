@@ -4,10 +4,11 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(value = "persons")
-public class PersonEntity {
+public class PersonEntity implements Persistable<UUID> {
 
     @Id
     private UUID id;
@@ -16,7 +17,8 @@ public class PersonEntity {
     private LocalDate birth;
     private String[] stack;
 
-    public PersonEntity(String surname, String name, LocalDate birth, String[] stack) {
+    public PersonEntity(UUID id, String surname, String name, LocalDate birth, String[] stack) {
+        this.id = id;
         this.surname = surname;
         this.name = name;
         this.birth = birth;
@@ -65,6 +67,11 @@ public class PersonEntity {
 
     public void setStack(String[] stack) {
         this.stack = stack;
+    }
+
+    @Override
+    public boolean isNew() {
+        return true;
     }
 
 }

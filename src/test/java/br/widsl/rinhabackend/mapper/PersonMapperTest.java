@@ -22,8 +22,7 @@ class PersonMapperTest {
         String name = "John";
         LocalDate birth = LocalDate.now();
         String[] stack = { "Java", "Spring" };
-        PersonEntity entity = new PersonEntity(surname, name, birth, stack);
-        entity.setId(id);
+        PersonEntity entity = new PersonEntity(id, surname, name, birth, stack);
 
         PersonDTO dto = PersonMapper.parseDTO(entity);
 

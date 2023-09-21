@@ -18,7 +18,7 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
     Optional<PersonEntity> findBySurname(String surname);
 
     @Transactional(readOnly = true)
-    @Query("SELECT COUNT(*) FROM persons")
+    @Query("SELECT COUNT(1) FROM persons")
     Integer findAndCountPersons();
 
     @Transactional(readOnly = true)
@@ -26,15 +26,14 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
 
     @Transactional(readOnly = true)
     @Query("""
-                SELECT p.name, p.surname, p.birth, p.stack FROM persons p
-                WHERE p.name LIKE '%' || :termo || '%'
-                OR p.surname LIKE '%' || :termo || '%'
-                OR array_to_string(p.stack, ',') ILIKE '%' || :termo || '%'
+                SELECT p.id, p.name, p.surname, p.birth, p.stack FROM persons p
+                WHERE p.terms ILIKE '%' || :termo || '%'
+                LIMIT 50
             """)
     List<PersonEntity> findByTerm(@Param("termo") String term);
 
     @Transactional(readOnly = true)
-    @Query("SELECT p.name, p.surname, p.birth, p.stack FROM persons p WHERE p.birth = :date")
+    @Query("SELECT p.id, p.name, p.surname, p.birth, p.stack FROM persons p WHERE p.birth = :date")
     List<PersonEntity> findByDate(@Param("date") LocalDate date);
 
 }

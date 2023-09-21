@@ -7,11 +7,11 @@ spring:
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      connection-timeout: ${POOL_DATA_CONNECTION_TIMEOUT:30000}
+      connection-timeout: ${POOL_DATA_CONNECTION_TIMEOUT:600000}
       minimum-idle: ${POOL_DATA_MINIMUM_IDLE:1}
-      maximum-pool-size: ${POOL_DATA_MAXIMUM_POOL_SIZE:10}
+      maximum-pool-size: ${POOL_DATA_MAXIMUM_POOL_SIZE:150}
       idle-timeout: ${POOL_DATA_IDLE_TIMEOUT:600000}
-      max-lifetime: ${POOL_DATA_MAX_LIFE_TIME:1800000}
+      max-lifetime: ${POOL_DATA_MAX_LIFE_TIME:600000}
       auto-commit: ${POOL_DATA_AUTO_COMMIT:true}
 
   cache:

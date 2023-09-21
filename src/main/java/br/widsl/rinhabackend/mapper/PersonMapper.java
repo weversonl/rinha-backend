@@ -26,6 +26,7 @@ public class PersonMapper {
     public static PersonEntity parseEntity(PersonDTO dto) {
         PersonEntity entity = new PersonEntity();
         if (dto != null) {
+            entity.setId(dto.getId());
             entity.setName(dto.getName());
             entity.setSurname(dto.getSurname());
             entity.setBirth(LocalDate.parse(dto.getBirth()));

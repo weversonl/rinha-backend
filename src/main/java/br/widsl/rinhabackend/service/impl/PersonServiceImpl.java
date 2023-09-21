@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
@@ -65,7 +66,6 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable("#term")
     public List<PersonDTO> findByTerm(String term) {
 
         List<PersonEntity> entity;
@@ -84,22 +84,23 @@ public class PersonServiceImpl implements PersonService {
 
     }
 
-    @Override
     @Async
+    @Override
+    @Transactional
     public CompletableFuture<PersonDTO> savePerson(PersonDTO personDTO) {
 
         try {
 
             findBySurname(personDTO.getSurname()).ifPresent(x -> {
                 log.error("Existent person for surname -> %s".formatted(x.getSurname()));
-                throw new BadRequestException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
+                throw new DatabaseException(Constants.EXISTENT_PERSON.formatted(x.getSurname()));
             });
 
-            PersonEntity saved = personRepository.save(PersonMapper.parseEntity(personDTO));
-            personDTO.setId(saved.getId());
+            personDTO.setId(UUID.randomUUID());
+            personRepository.save(PersonMapper.parseEntity(personDTO));
             return CompletableFuture.completedFuture(personDTO);
 
-        } catch (BadRequestException e) {
+        } catch (DatabaseException e) {
             log.error("Bad Request for surname -> %s".formatted(personDTO.getSurname()));
             throw e;
         } catch (Exception e) {

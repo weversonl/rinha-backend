@@ -14,6 +14,7 @@ import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import br.widsl.rinhabackend.exception.impl.DatabaseException;
 import br.widsl.rinhabackend.exception.impl.PersonNotFound;
 import br.widsl.rinhabackend.exception.impl.TechnicalException;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
 import br.widsl.rinhabackend.exception.model.ErrorValidation;
 
@@ -31,25 +32,36 @@ public class PersonControllerAdvice {
                         .build());
     }
 
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiErrorResponse> handleBadRequestException(BadRequestException exception) {
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(ApiErrorResponse.builder()
-                        .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                        .code(HttpStatus.BAD_REQUEST.value())
                         .message(Constants.BAD_REQUEST_DESC)
                         .description(exception.getMessage())
                         .build());
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(DatabaseException.class)
-    public ResponseEntity<ApiErrorResponse> handleDatabaseException() {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<ApiErrorResponse> handleUnprocessableEntityException(UnprocessableEntityException exception) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
                 .body(ApiErrorResponse.builder()
-                        .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .message(Constants.INTERNAL_SERVER_EX)
-                        .description(Constants.INTERNAL_SERVER_DESC)
+                        .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                        .message(Constants.DATABASE_EX)
+                        .description(exception.getMessage())
+                        .build());
+    }
+
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(DatabaseException.class)
+    public ResponseEntity<ApiErrorResponse> handleDatabaseException(DatabaseException exception) {
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(ApiErrorResponse.builder()
+                        .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                        .message(Constants.DATABASE_EX)
+                        .description(exception.getMessage())
                         .build());
     }
 
@@ -59,17 +71,17 @@ public class PersonControllerAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ApiErrorResponse.builder()
                         .code(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                        .message(Constants.INTERNAL_SERVER_EX)
+                        .message(Constants.DATABASE_EX)
                         .description(exception.getMessage())
                         .build());
     }
 
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException exception) {
 
         ApiErrorResponse apiErrorResponse = ApiErrorResponse.builder()
-                .code(HttpStatus.UNPROCESSABLE_ENTITY.value())
+                .code(HttpStatus.BAD_REQUEST.value())
                 .message(Constants.BAD_REQUEST_EX)
                 .description(Constants.BAD_REQUEST_DESC)
                 .build();
@@ -79,7 +91,7 @@ public class PersonControllerAdvice {
             apiErrorResponse.addError(new ErrorValidation(description));
         });
 
-        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(apiErrorResponse);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiErrorResponse);
     }
 
 }

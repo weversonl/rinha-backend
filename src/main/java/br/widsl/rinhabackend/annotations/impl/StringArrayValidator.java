@@ -5,6 +5,7 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 public class StringArrayValidator implements ConstraintValidator<StringArray, String[]> {
+
     private int maxLength;
 
     @Override

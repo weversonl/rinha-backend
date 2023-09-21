@@ -8,11 +8,13 @@ public class Constants {
 
     }
 
+    public static final Pattern DATE_PATTERN = Pattern.compile("\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][\\d]|3[01])$");
+
+    public static final Pattern NAME_VERIFY_PATTERN = Pattern.compile("^[\\p{L}\\s]+$");
+
     public static final int ARRAY_ITEM_SIZE = 32;
 
     public static final int TTL_REDIS = 120;
-
-    public static final Pattern DATE_PATTERN = Pattern.compile("\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12][\\d]|3[01])$");
 
     public static final String ARRAY_ITEM_MESSAGE = "Invalid vector elements in stack field. Each item can be up to 32 characters";
 
@@ -22,6 +24,8 @@ public class Constants {
 
     public static final String INVALID_DATE = "Date of birth is required and must be in the pattern: YYYY-MM-DD";
 
+    public static final String NAME_ERROR_VALIDATION = "The name must only contain letters";
+
     public static final String EXISTENT_PERSON = "Person with surname %s already exists!";
 
     public static final String SAVE_ERROR = "Error saving person with surname %s!";
@@ -30,14 +34,14 @@ public class Constants {
 
     public static final String BAD_REQUEST_EX = "Bad Request";
 
-    public static final String BAD_REQUEST_DESC = "Unprocessable Entity/Content";
+    public static final String BAD_REQUEST_DESC = "There are validation errors in the fields sent";
 
     public static final String INVALID_ID = "Invalid person ID";
 
     public static final String NOT_FOUND_EX = "Not Found";
 
-    public static final String INTERNAL_SERVER_EX = "Internal Server Error";
+    public static final String DATABASE_EX = "Unprocessable Entity/Content";
 
-    public static final String INTERNAL_SERVER_DESC = "There was an error processing data on the server";
+    public static final String DATABASE_EX_DESC = "There was an error processing data on database";
 
 }

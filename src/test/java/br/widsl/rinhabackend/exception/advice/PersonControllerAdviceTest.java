@@ -1,9 +1,7 @@
 package br.widsl.rinhabackend.exception.advice;
 
 import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.exception.impl.BadRequestException;
-import br.widsl.rinhabackend.exception.impl.PersonNotFound;
-import br.widsl.rinhabackend.exception.impl.TechnicalException;
+import br.widsl.rinhabackend.exception.impl.*;
 import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,8 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -51,16 +48,16 @@ class PersonControllerAdviceTest {
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody()))).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.BAD_REQUEST.value(),
+                ((Objects.requireNonNull(responseEntity.getBody()))).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, (Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
-        assertEquals(1, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
+                (Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(1, (Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
+                (Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
     }
 
     @Test
@@ -76,18 +73,18 @@ class PersonControllerAdviceTest {
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.BAD_REQUEST.value(),
+                (Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, (Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
-        assertEquals(2, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
+                (Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(2, (Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage1,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
+                (Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
         assertEquals(exceptionMessage2,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(1).getDescription());
+                (Objects.requireNonNull(responseEntity.getBody())).getErrors().get(1).getDescription());
     }
 
     @Test
@@ -101,32 +98,45 @@ class PersonControllerAdviceTest {
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
                 .handleMethodArgumentNotValid(methodArgumentNotValidException);
 
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.BAD_REQUEST_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.BAD_REQUEST.value(),
+                (Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.BAD_REQUEST_EX, (Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertEquals(Constants.BAD_REQUEST_DESC,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
-        assertEquals(1, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
+                (Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(1, (Objects.requireNonNull(responseEntity.getBody())).getErrors().size());
         assertEquals(exceptionMessage,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
+                (Objects.requireNonNull(responseEntity.getBody())).getErrors().get(0).getDescription());
+    }
+
+    @Test
+    void testHandleUnprocessableEntityExceptionWhenUnprocessableEntityExceptionThrownThenReturnsCorrectResponseEntity() {
+
+        ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
+                .handleUnprocessableEntityException(new UnprocessableEntityException(null));
+
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),Objects.requireNonNull(responseEntity.getBody()).getCode());
+        assertEquals(Constants.DATABASE_EX,
+                (Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertNull(Objects.requireNonNull(responseEntity.getBody()).getDescription());
     }
 
     @Test
     void testHandleDatabaseExceptionWhenDatabaseExceptionThrownThenReturnsCorrectResponseEntity() {
 
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
-                .handleDatabaseException();
+                .handleDatabaseException(new DatabaseException(null));
 
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.INTERNAL_SERVER_EX,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
-        assertEquals(Constants.INTERNAL_SERVER_DESC,
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                (Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.DATABASE_EX,
+                (Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertNull((Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
     @Test
@@ -138,10 +148,10 @@ class PersonControllerAdviceTest {
                 .handlePersonNotFound(new PersonNotFound(exceptionMessage));
 
         assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.NOT_FOUND.value(), Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.NOT_FOUND_EX, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
-        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.NOT_FOUND.value(), (Objects.requireNonNull(responseEntity.getBody())).getCode());
+        assertEquals(Constants.NOT_FOUND_EX, (Objects.requireNonNull(responseEntity.getBody())).getMessage());
+        assertEquals(exceptionMessage, (Objects.requireNonNull(responseEntity.getBody())).getDescription());
     }
 
     @Test
@@ -152,12 +162,11 @@ class PersonControllerAdviceTest {
         ResponseEntity<ApiErrorResponse> responseEntity = personControllerAdvice
                 .handleBadRequestException(new BadRequestException(exceptionMessage));
 
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertNotNull(Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())));
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),
-                Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getCode());
-        assertEquals(Constants.BAD_REQUEST_DESC, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getMessage());
-        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(HttpStatus.BAD_REQUEST, responseEntity.getStatusCode());
+        assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
+        assertEquals(HttpStatus.BAD_REQUEST.value(), Objects.requireNonNull(responseEntity.getBody()).getCode());
+        assertEquals(Constants.BAD_REQUEST_DESC, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+        assertEquals(exceptionMessage, Objects.requireNonNull(responseEntity.getBody()).getDescription());
     }
 
     @Test
@@ -173,8 +182,8 @@ class PersonControllerAdviceTest {
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, responseEntity.getStatusCode());
         assertNotNull(Objects.requireNonNull(responseEntity.getBody()));
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR.value(), Objects.requireNonNull(responseEntity.getBody()).getCode());
-        assertEquals(Constants.INTERNAL_SERVER_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
-        assertEquals(exceptionMessage, Objects.requireNonNull(Objects.requireNonNull(responseEntity.getBody())).getDescription());
+        assertEquals(Constants.DATABASE_EX, Objects.requireNonNull(responseEntity.getBody()).getMessage());
+        assertEquals(exceptionMessage, Objects.requireNonNull(responseEntity.getBody()).getDescription());
     }
 
 }

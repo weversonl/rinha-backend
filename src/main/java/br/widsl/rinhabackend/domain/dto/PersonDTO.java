@@ -12,10 +12,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import br.widsl.rinhabackend.annotations.BirthDate;
+import br.widsl.rinhabackend.annotations.NameValidation;
+import br.widsl.rinhabackend.annotations.NonNullFields;
 import br.widsl.rinhabackend.annotations.StringArray;
 import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.deserializers.StringArrayDeserializer;
-import jakarta.validation.constraints.NotBlank;
 
 @RedisHash(timeToLive = Constants.TTL_REDIS)
 public class PersonDTO implements Serializable {
@@ -25,17 +26,19 @@ public class PersonDTO implements Serializable {
 
     private UUID id;
 
-    @NotBlank(message = Constants.FIELD_REQUIRED)
+    @NonNullFields(fieldName = "apelido")
     @Length(max = 32, message = Constants.FIELD_SIZE)
     @JsonProperty("apelido")
     private String surname;
 
-    @NotBlank(message = Constants.FIELD_REQUIRED)
+    @NameValidation
+    @NonNullFields(fieldName = "nome")
     @Length(max = 100, message = Constants.FIELD_SIZE)
     @JsonProperty("nome")
     private String name;
 
     @BirthDate
+    @NonNullFields(fieldName = "nascimento")
     @JsonProperty("nascimento")
     private String birth;
 

@@ -59,7 +59,7 @@ class PersonControllerTest {
                 .content(new ObjectMapper().writeValueAsString(validPersonDTO))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.INTERNAL_SERVER_EX));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.DATABASE_EX));
     }
 
     @Test
@@ -73,7 +73,7 @@ class PersonControllerTest {
                 .content(new ObjectMapper().writeValueAsString(validPersonDTO))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isInternalServerError())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.INTERNAL_SERVER_EX));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(Constants.DATABASE_EX));
 
         Assertions.assertTrue(Thread.currentThread().isInterrupted());
     }

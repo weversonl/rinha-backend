@@ -49,7 +49,7 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenSurnameIsUniqueThenReturnSavedPerson() {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
         when(personRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
@@ -61,11 +61,11 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenSurnameIsNotUniqueThenThrowBadRequestException() {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(BadRequestException.class)
+                .isInstanceOf(DatabaseException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 
@@ -99,7 +99,7 @@ class PersonServiceImplTest {
     @Test
     void testFindByIdWhenIdExistsThenReturnsPersonDTO() {
         UUID id = UUID.randomUUID();
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         personEntity.setId(id);
         when(personRepository.findById(any(UUID.class))).thenReturn(Optional.of(personEntity));
 
@@ -141,7 +141,7 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenPersonDoesNotExistThenReturnPerson() throws ExecutionException, InterruptedException {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
         when(personRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
@@ -153,11 +153,11 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenPersonExistsThenThrowBadRequestException() {
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(BadRequestException.class)
+                .isInstanceOf(DatabaseException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 
@@ -179,11 +179,11 @@ class PersonServiceImplTest {
     void testSavePersonWhenSurnameExistsThenThrowsExistentPersonException() {
 
         PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
-        PersonEntity personEntity = new PersonEntity("Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
         assertThatThrownBy(() -> personService.savePerson(personDTO))
-                .isInstanceOf(BadRequestException.class)
+                .isInstanceOf(DatabaseException.class)
                 .hasMessageContaining(Constants.EXISTENT_PERSON.formatted(personDTO.getSurname()));
     }
 
