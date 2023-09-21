@@ -96,7 +96,7 @@ public class PersonControllerAdvice {
                 .build();
 
         exception.getBindingResult().getFieldErrors().forEach(error -> {
-            log.warn("MethodArgumentNotValidEx -> {}", exception.getMessage().formatted(error.getField()));
+            log.warn("MethodArgumentNotValidEx -> {}", Objects.requireNonNull(error.getDefaultMessage()).formatted(error.getField()));
             String description = Objects.requireNonNull(error.getDefaultMessage()).formatted(error.getField());
             apiErrorResponse.addError(new ErrorValidation(description));
         });
