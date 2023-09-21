@@ -101,7 +101,6 @@ public class PersonServiceImpl implements PersonService {
             return CompletableFuture.completedFuture(personDTO);
 
         } catch (DatabaseException e) {
-            log.error("Bad Request for surname -> %s".formatted(personDTO.getSurname()));
             throw e;
         } catch (Exception e) {
             log.error("Database error: ", e.getCause());

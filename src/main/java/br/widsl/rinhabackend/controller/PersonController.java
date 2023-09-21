@@ -36,7 +36,6 @@ public class PersonController {
     @PostMapping("/pessoas")
     public ResponseEntity<PersonDTO> savePerson(@RequestBody @Valid PersonDTO requestDTO) {
 
-        log.info("Save endpoint | Request -> {}", requestDTO);
         CompletableFuture<PersonDTO> asyncResponse = personService.savePerson(requestDTO);
 
         try {
@@ -59,21 +58,18 @@ public class PersonController {
 
     @GetMapping("/pessoas/{id}")
     public ResponseEntity<PersonDTO> getPersonById(@PathVariable String id) {
-        log.info("Get by Id endpoint | Id -> {}", id);
         PersonDTO response = personService.findById(id);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/pessoas")
     public ResponseEntity<List<PersonDTO>> getPersonByTerm(@RequestParam(name = "t", required = false) String term) {
-        log.info("Get by Term endpoint | term -> {}", term);
         List<PersonDTO> response = personService.findByTerm(term);
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/contagem-pessoas")
     public ResponseEntity<PersonCountDTO> personCount() {
-        log.info("Person Count endpoint");
         return ResponseEntity.ok(personService.personCount());
     }
 
