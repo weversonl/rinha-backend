@@ -22,7 +22,7 @@ public class Constants {
 
     public static final String FIELD_SIZE = "%s must be {max} characters";
 
-    public static final String INVALID_DATE = "Date of birth is required and must be in the pattern: YYYY-MM-DD";
+    public static final String INVALID_DATE = "Date of birth is invalid. Must be in the pattern: YYYY-MM-DD";
 
     public static final String NAME_ERROR_VALIDATION = "The name must only contain letters";
 

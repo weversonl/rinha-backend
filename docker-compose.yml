@@ -78,8 +78,3 @@ services:
 volumes:
   postgres-data:
   redis-data:
-
-networks:
-  default:
-    driver: host
-    name: rinha-nt

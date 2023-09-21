@@ -2,9 +2,12 @@ package br.widsl.rinhabackend.annotations.impl;
 
 import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
 
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 import br.widsl.rinhabackend.annotations.BirthDate;
+import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
@@ -14,8 +17,13 @@ public class DateValidator implements ConstraintValidator<BirthDate, String> {
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
         if (validateStringData(value) && validateStringPattern(value)) {
-            LocalDate date = LocalDate.parse(value);
-            return !date.isAfter(LocalDate.now());
+            try {
+                LocalDate date = LocalDate.parse(value);
+                return !date.isAfter(LocalDate.now());
+            } catch (DateTimeException e) {
+                throw new BadRequestException(Constants.INVALID_DATE);
+            }
+
         }
 
         return false;
