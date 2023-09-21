@@ -11,8 +11,6 @@ CREATE TABLE persons (
     ) STORED
 );
 
-CREATE INDEX IF NOT EXISTS idx_persons_id ON persons (id);
-
 CREATE INDEX IF NOT EXISTS idx_persons_concatenated_text_trgm
 ON persons
 USING GIST (terms gist_trgm_ops);
