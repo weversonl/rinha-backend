@@ -1,14 +1,14 @@
 package br.widsl.rinhabackend.domain.dto;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.Arrays;
-import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
+
+import java.util.Arrays;
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(Lifecycle.PER_CLASS)
 class PersonDTOTest {
@@ -27,7 +27,7 @@ class PersonDTOTest {
         String surname = "Doe";
         String name = "John";
         String birth = "2000-01-01";
-        String[] stack = { "Java", "Spring" };
+        String[] stack = {"Java", "Spring"};
         personDTO.setId(id);
         personDTO.setSurname(surname);
         personDTO.setName(name);
@@ -61,7 +61,7 @@ class PersonDTOTest {
         String surname = "Doe";
         String name = "John";
         String birth = "2000-01-01";
-        String[] stack = { "Java", "Spring" };
+        String[] stack = {"Java", "Spring"};
         personDTO.setId(id);
         personDTO.setSurname(surname);
         personDTO.setName(name);

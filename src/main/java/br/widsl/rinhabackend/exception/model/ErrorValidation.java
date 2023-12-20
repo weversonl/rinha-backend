@@ -1,9 +1,9 @@
 package br.widsl.rinhabackend.exception.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import java.io.Serial;
 import java.io.Serializable;
-
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorValidation implements Serializable {

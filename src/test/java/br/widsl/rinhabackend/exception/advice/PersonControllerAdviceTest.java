@@ -118,7 +118,7 @@ class PersonControllerAdviceTest {
 
         assertNotNull((Objects.requireNonNull(responseEntity.getBody())));
         assertEquals(HttpStatus.UNPROCESSABLE_ENTITY, responseEntity.getStatusCode());
-        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(),Objects.requireNonNull(responseEntity.getBody()).getCode());
+        assertEquals(HttpStatus.UNPROCESSABLE_ENTITY.value(), Objects.requireNonNull(responseEntity.getBody()).getCode());
         assertEquals(Constants.DATABASE_EX,
                 (Objects.requireNonNull(responseEntity.getBody())).getMessage());
         assertNull(Objects.requireNonNull(responseEntity.getBody()).getDescription());

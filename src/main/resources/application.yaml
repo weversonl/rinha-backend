@@ -23,3 +23,6 @@ spring:
       port: ${REDIS_PORT}
       database: ${REDIS_DB}
       timeout: ${REDIS_TIMEOUT}
+
+server:
+  port: ${SERVER_PORT:8080}

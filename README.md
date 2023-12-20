@@ -2,7 +2,9 @@
    Rinha Backend
 </h1>
 
-Project developed to participate in the "Rinha de Backend" challenge. The aim of the challenge is to create an API for manipulating people's data, with cache, database and a load balancer to manage two instances, all in a limited environment with 1.5vCPUs and 3GB of memory.
+Project developed to participate in the "Rinha de Backend" challenge. The aim of the challenge is to create an API for
+manipulating people's data, with cache, database and a load balancer to manage two instances, all in a limited
+environment with 1.5vCPUs and 3GB of memory.
 
 ## Technologies
 
@@ -28,20 +30,22 @@ Project developed to participate in the "Rinha de Backend" challenge. The aim of
 
 ## Get started
 
-In the project, an [example environment variables file](.env) will be available. The project will start using it, if you want to change the database user and password, or some other value, feel free
+In the project, an [example environment variables file](.env) will be available. The project will start using it, if you
+want to change the database user and password, or some other value, feel free
 
-0.  Clone git repository with modules
+0. Clone git repository with modules
 
-        git clone https://github.com/WeversonL/rinha-backend.git
-        cd rinha-backend
+       git clone https://github.com/WeversonL/rinha-backend.git
+       cd rinha-backend
 
 ### Running the application with docker-compose
 
-1.  Start with docker-compose
+1. Start with docker-compose
 
-        docker-compose up -d
+       docker-compose up -d
 
-You can access the API via load balancer, sending requests to localhost:9999. Due to resource limitations, it is necessary to wait a while for the entire application to be up and running.
+You can access the API via load balancer, sending requests to localhost:9999. Due to resource limitations, it is
+necessary to wait a while for the entire application to be up and running.
 
 ## API Endpoints
 
@@ -91,7 +95,8 @@ $ http GET :9999/pessoas/{id}
 
 - Get person by term
 
-In this endpoint you can search for people by any term. It will check whether the term entered appears in any of the columns. For example, knowing if there is someone in my bank who has a STRING with the value "John"
+In this endpoint you can search for people by any term. It will check whether the term entered appears in any of the
+columns. For example, knowing if there is someone in my bank who has a STRING with the value "John"
 
 ```
 $ http GET ':9999/pessoas?t=John'

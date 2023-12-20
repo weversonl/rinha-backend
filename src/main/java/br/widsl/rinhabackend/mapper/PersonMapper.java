@@ -1,9 +1,9 @@
 package br.widsl.rinhabackend.mapper;
 
-import java.time.LocalDate;
-
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
 import br.widsl.rinhabackend.domain.entity.PersonEntity;
+
+import java.time.LocalDate;
 
 public class PersonMapper {
 

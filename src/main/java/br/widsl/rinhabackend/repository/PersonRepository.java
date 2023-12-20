@@ -1,16 +1,15 @@
 package br.widsl.rinhabackend.repository;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
+import br.widsl.rinhabackend.domain.entity.PersonEntity;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.widsl.rinhabackend.domain.entity.PersonEntity;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
 

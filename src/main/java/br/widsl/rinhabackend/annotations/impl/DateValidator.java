@@ -1,15 +1,15 @@
 package br.widsl.rinhabackend.annotations.impl;
 
-import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
-
-import java.time.DateTimeException;
-import java.time.LocalDate;
-
 import br.widsl.rinhabackend.annotations.BirthDate;
 import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+
+import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
 
 public class DateValidator implements ConstraintValidator<BirthDate, String> {
 

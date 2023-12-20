@@ -1,16 +1,13 @@
 package br.widsl.rinhabackend.mapper;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import br.widsl.rinhabackend.domain.dto.PersonDTO;
+import br.widsl.rinhabackend.domain.entity.PersonEntity;
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-import org.junit.jupiter.api.Test;
-
-import br.widsl.rinhabackend.domain.dto.PersonDTO;
-import br.widsl.rinhabackend.domain.entity.PersonEntity;
+import static org.junit.jupiter.api.Assertions.*;
 
 class PersonMapperTest {
 
@@ -21,7 +18,7 @@ class PersonMapperTest {
         String surname = "Doe";
         String name = "John";
         LocalDate birth = LocalDate.now();
-        String[] stack = { "Java", "Spring" };
+        String[] stack = {"Java", "Spring"};
         PersonEntity entity = new PersonEntity(id, surname, name, birth, stack);
 
         PersonDTO dto = PersonMapper.parseDTO(entity);
@@ -56,7 +53,7 @@ class PersonMapperTest {
         String surname = "Doe";
         String name = "John";
         String birth = LocalDate.now().toString();
-        String[] stack = { "Java", "Spring" };
+        String[] stack = {"Java", "Spring"};
         PersonDTO dto = new PersonDTO(surname, name, birth, stack);
 
         PersonEntity entity = PersonMapper.parseEntity(dto);

@@ -14,7 +14,7 @@ public class Constants {
 
     public static final int ARRAY_ITEM_SIZE = 32;
 
-    public static final int TTL_REDIS = 120;
+    public static final int TTL_REDIS = 1000;
 
     public static final int BATCH_TIME = 2000;
 

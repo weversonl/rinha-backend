@@ -18,7 +18,7 @@ public class NonNullFieldsValidator implements ConstraintValidator<NonNullFields
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.isBlank(value)) {
             throw new UnprocessableEntityException(Constants.FIELD_REQUIRED.formatted(fieldName));
         }
         return true;
