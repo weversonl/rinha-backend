@@ -29,7 +29,6 @@ public class PersonDTO implements Serializable {
     @JsonProperty("apelido")
     private String surname;
 
-    @NonNullFields(fieldName = "nome")
     @Length(max = 100, message = Constants.FIELD_SIZE)
     @NameValidation
     @JsonProperty("nome")
