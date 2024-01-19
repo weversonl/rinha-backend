@@ -4,6 +4,7 @@ import br.widsl.rinhabackend.domain.entity.PersonEntity;
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -22,7 +23,7 @@ public interface PersonRepository extends CrudRepository<PersonEntity, UUID> {
     Integer findAndCountPersons();
 
     @Transactional(readOnly = true)
-    Optional<PersonEntity> findById(UUID id);
+    @NonNull Optional<PersonEntity> findById(@NonNull UUID id);
 
     @Transactional(readOnly = true)
     @Query("""

@@ -5,6 +5,8 @@ import br.widsl.rinhabackend.domain.entity.PersonEntity;
 
 import java.time.LocalDate;
 
+import org.springframework.lang.NonNull;
+
 public class PersonMapper {
 
     private PersonMapper() {
@@ -23,7 +25,7 @@ public class PersonMapper {
         return personDTO;
     }
 
-    public static PersonEntity parseEntity(PersonDTO dto) {
+    public static @NonNull PersonEntity parseEntity(PersonDTO dto) {
         PersonEntity entity = new PersonEntity();
         if (dto != null) {
             entity.setId(dto.getId());

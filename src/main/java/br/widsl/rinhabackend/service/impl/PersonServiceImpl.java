@@ -1,5 +1,23 @@
 package br.widsl.rinhabackend.service.impl;
 
+import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
+import static java.util.Objects.requireNonNull;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import br.widsl.rinhabackend.constants.Constants;
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
@@ -11,22 +29,6 @@ import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
 import br.widsl.rinhabackend.mapper.PersonMapper;
 import br.widsl.rinhabackend.repository.PersonRepository;
 import br.widsl.rinhabackend.service.PersonService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
-import static br.widsl.rinhabackend.constants.Constants.DATE_PATTERN;
 
 @Service
 @CacheConfig(cacheNames = "persons-cache")
@@ -58,7 +60,7 @@ public class PersonServiceImpl implements PersonService {
             throw new BadRequestException(Constants.INVALID_ID);
         }
 
-        Optional<PersonEntity> entity = personRepository.findById(uuid);
+        Optional<PersonEntity> entity = personRepository.findById(requireNonNull(uuid));
 
         return entity.map(PersonMapper::parseDTO)
                 .orElseThrow(() -> new PersonNotFound(Constants.EMPTY_PERSON.formatted(id)));

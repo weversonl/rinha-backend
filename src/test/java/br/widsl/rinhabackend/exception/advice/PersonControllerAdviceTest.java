@@ -1,8 +1,14 @@
 package br.widsl.rinhabackend.exception.advice;
 
-import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.exception.impl.*;
-import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.Mockito.when;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,12 +20,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import br.widsl.rinhabackend.exception.impl.DatabaseException;
+import br.widsl.rinhabackend.exception.impl.PersonNotFound;
+import br.widsl.rinhabackend.exception.impl.TechnicalException;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
+import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
 
 @ExtendWith(MockitoExtension.class)
 class PersonControllerAdviceTest {

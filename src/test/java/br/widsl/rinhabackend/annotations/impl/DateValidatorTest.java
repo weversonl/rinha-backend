@@ -1,14 +1,15 @@
 package br.widsl.rinhabackend.annotations.impl;
 
-import jakarta.validation.ConstraintValidatorContext;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import jakarta.validation.ConstraintValidatorContext;
 
 @ExtendWith(MockitoExtension.class)
 class DateValidatorTest {

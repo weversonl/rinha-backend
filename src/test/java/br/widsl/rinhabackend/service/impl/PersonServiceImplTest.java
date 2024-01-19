@@ -1,19 +1,13 @@
 package br.widsl.rinhabackend.service.impl;
 
-import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
-import br.widsl.rinhabackend.domain.dto.PersonDTO;
-import br.widsl.rinhabackend.domain.entity.PersonEntity;
-import br.widsl.rinhabackend.exception.impl.DatabaseException;
-import br.widsl.rinhabackend.exception.impl.PersonNotFound;
-import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
-import br.widsl.rinhabackend.repository.PersonRepository;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,11 +16,21 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
+import br.widsl.rinhabackend.domain.dto.PersonDTO;
+import br.widsl.rinhabackend.domain.entity.PersonEntity;
+import br.widsl.rinhabackend.exception.impl.DatabaseException;
+import br.widsl.rinhabackend.exception.impl.PersonNotFound;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
+import br.widsl.rinhabackend.repository.PersonRepository;
 
 @ExtendWith(MockitoExtension.class)
 class PersonServiceImplTest {
@@ -44,8 +48,9 @@ class PersonServiceImplTest {
 
     @Test
     void testSavePersonWhenSurnameIsUniqueThenReturnSavedPerson() {
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(),
+                new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
         when(personRepository.save(any(PersonEntity.class))).thenReturn(personEntity);
 
@@ -56,7 +61,7 @@ class PersonServiceImplTest {
 
     @Test
     void testSavePersonWhenSurnameIsNotUniqueThenThrowBadRequestException() {
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         String personEntity = "surname";
 
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
@@ -68,7 +73,7 @@ class PersonServiceImplTest {
 
     @Test
     void testSavePersonWhenDatabaseErrorOccursThenThrowDatabaseException() {
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
         when(personRepository.save(any(PersonEntity.class))).thenThrow(RuntimeException.class);
 
@@ -96,7 +101,8 @@ class PersonServiceImplTest {
     @Test
     void testFindByIdWhenIdExistsThenReturnsPersonDTO() {
         UUID id = UUID.randomUUID();
-        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(), new String[]{"Java", "Spring"});
+        PersonEntity personEntity = new PersonEntity(null, "Doe", "John", LocalDate.now(),
+                new String[] { "Java", "Spring" });
         personEntity.setId(id);
         when(personRepository.findById(any(UUID.class))).thenReturn(Optional.of(personEntity));
 
@@ -137,7 +143,7 @@ class PersonServiceImplTest {
 
     @Test
     void testSavePersonWhenPersonDoesNotExistThenReturnPerson() throws ExecutionException, InterruptedException {
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
 
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
 
@@ -148,7 +154,7 @@ class PersonServiceImplTest {
 
     @Test
     void testSavePersonWhenPersonExistsThenThrowBadRequestException() {
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         String personEntity = "surname";
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
@@ -174,7 +180,7 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenSurnameExistsThenThrowsExistentPersonException() {
 
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         String personEntity = "surname";
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.of(personEntity));
 
@@ -186,7 +192,7 @@ class PersonServiceImplTest {
     @Test
     void testSavePersonWhenExceptionOccursThenThrowsDatabaseException() {
 
-        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[]{"Java", "Spring"});
+        PersonDTO personDTO = new PersonDTO("Doe", "John", "2000-01-01", new String[] { "Java", "Spring" });
         when(personRepository.findBySurname(anyString())).thenReturn(Optional.empty());
         when(personRepository.save(any(PersonEntity.class))).thenThrow(RuntimeException.class);
 

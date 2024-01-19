@@ -1,16 +1,17 @@
 package br.widsl.rinhabackend.annotations.impl;
 
-import br.widsl.rinhabackend.annotations.NonNullFields;
-import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
-import jakarta.validation.ConstraintValidatorContext;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import br.widsl.rinhabackend.annotations.NonNullFields;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
+import jakarta.validation.ConstraintValidatorContext;
 
 @ExtendWith(MockitoExtension.class)
 class NonNullFieldsValidatorTest {

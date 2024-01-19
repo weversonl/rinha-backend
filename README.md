@@ -99,17 +99,18 @@ In this endpoint you can search for people by any term. It will check whether th
 columns. For example, knowing if there is someone in my bank who has a STRING with the value "John"
 
 ```
-$ http GET ':9999/pessoas?t=John'
+$ http GET ':9999/pessoas?t=nickname'
 
 [
     {
         "id": "b987f790-7c92-42ca-ab99-2358adcd5e38",
-        "nome": "John Mars",
-        "apelido": "John",
+        "nome": "My Name",
+        "apelido": "nickname",
         "nascimento": "2003-01-22",
         "stack": [
             "Java",
-            "C"
+            "C",
+            "Python"
         ]
     }
 ]
@@ -119,12 +120,29 @@ $ http GET ':9999/pessoas?t=2003-01-22'
 [
     {
         "id": "b987f790-7c92-42ca-ab99-2358adcd5e38",
-        "nome": "John Mars",
-        "apelido": "John",
+        "nome": "My Name",
+        "apelido": "nickname",
         "nascimento": "2003-01-22",
         "stack": [
             "Java",
-            "C"
+            "C",
+            "Python"
+        ]
+    }
+]
+
+$ http GET ':9999/pessoas?t=python'
+
+[
+    {
+        "id": "b987f790-7c92-42ca-ab99-2358adcd5e38",
+        "nome": "My Name",
+        "apelido": "nickname",
+        "nascimento": "2003-01-22",
+        "stack": [
+            "Java",
+            "C",
+            "Python"
         ]
     }
 ]

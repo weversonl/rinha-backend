@@ -1,13 +1,14 @@
 package br.widsl.rinhabackend.annotations.impl;
 
-import br.widsl.rinhabackend.annotations.StringArray;
-import jakarta.validation.ConstraintValidatorContext;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import br.widsl.rinhabackend.annotations.StringArray;
+import jakarta.validation.ConstraintValidatorContext;
 
 class StringArrayValidatorTest {
     private StringArrayValidator validator;
@@ -37,7 +38,7 @@ class StringArrayValidatorTest {
     @Test
     void testIsValidWhenArrayContainsNullThenReturnFalse() {
 
-        String[] values = {null};
+        String[] values = { null };
 
         boolean result = validator.isValid(values, context);
 
@@ -47,7 +48,7 @@ class StringArrayValidatorTest {
     @Test
     void testIsValidWhenArrayContainsEmptyStringThenReturnFalse() {
 
-        String[] values = {""};
+        String[] values = { "" };
 
         boolean result = validator.isValid(values, context);
 
@@ -57,7 +58,7 @@ class StringArrayValidatorTest {
     @Test
     void testIsValidWhenArrayContainsLongStringThenReturnFalse() {
 
-        String[] values = {"This is a very long string that exceeds the max length"};
+        String[] values = { "This is a very long string that exceeds the max length" };
 
         boolean result = validator.isValid(values, context);
 
@@ -67,7 +68,7 @@ class StringArrayValidatorTest {
     @Test
     void testIsValidWhenArrayContainsValidStringsThenReturnTrue() {
 
-        String[] values = {"Valid", "Strings"};
+        String[] values = { "Valid", "Strings" };
 
         boolean result = validator.isValid(values, context);
 

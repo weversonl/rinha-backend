@@ -1,11 +1,12 @@
 package br.widsl.rinhabackend.annotations.impl;
 
-import br.widsl.rinhabackend.exception.impl.BadRequestException;
-import jakarta.validation.ConstraintValidatorContext;
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Test;
+
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import jakarta.validation.ConstraintValidatorContext;
 
 class NameValidatorTest {
 
