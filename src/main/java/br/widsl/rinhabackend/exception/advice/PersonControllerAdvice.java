@@ -1,9 +1,7 @@
 package br.widsl.rinhabackend.exception.advice;
 
-import br.widsl.rinhabackend.constants.Constants;
-import br.widsl.rinhabackend.exception.impl.*;
-import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
-import br.widsl.rinhabackend.exception.model.ErrorValidation;
+import java.util.Objects;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.Objects;
+import br.widsl.rinhabackend.constants.Constants;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import br.widsl.rinhabackend.exception.impl.DatabaseException;
+import br.widsl.rinhabackend.exception.impl.PersonNotFound;
+import br.widsl.rinhabackend.exception.impl.TechnicalException;
+import br.widsl.rinhabackend.exception.impl.UnprocessableEntityException;
+import br.widsl.rinhabackend.exception.model.ApiErrorResponse;
+import br.widsl.rinhabackend.exception.model.ErrorValidation;
 
 @RestControllerAdvice
 public class PersonControllerAdvice {

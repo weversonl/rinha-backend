@@ -70,8 +70,9 @@ class ApiErrorResponseTest {
     void equalsWhenComparedWithDifferentClassObject() {
         ApiErrorResponse apiErrorResponse = new ApiErrorResponse(400, "Bad Request", "Invalid request",
                 new ArrayList<>());
-        ApiErrorResponse otherObject =  new ApiErrorResponse(400, "Bad Request two", "Invalid request two",
-        new ArrayList<>());;
+        ApiErrorResponse otherObject = new ApiErrorResponse(400, "Bad Request two", "Invalid request two",
+                new ArrayList<>());
+        ;
 
         boolean result = apiErrorResponse.equals(otherObject);
 

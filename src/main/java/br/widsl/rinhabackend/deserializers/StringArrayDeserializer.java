@@ -1,12 +1,13 @@
 package br.widsl.rinhabackend.deserializers;
 
-import br.widsl.rinhabackend.exception.impl.BadRequestException;
+import java.io.IOException;
+
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import java.io.IOException;
+import br.widsl.rinhabackend.exception.impl.BadRequestException;
 
 public class StringArrayDeserializer extends JsonDeserializer<String[]> {
 
