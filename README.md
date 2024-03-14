@@ -9,8 +9,8 @@ environment with 1.5vCPUs and 3GB of memory.
 ## Technologies
 
 - [Spring Boot](https://spring.io/projects/spring-boot)
-- [Spring MVC](https://docs.spring.io/spring-framework/reference/web/webmvc.html)
-- [Spring Data JDBC](https://spring.io/projects/spring-data-jdbc/)
+- [Spring Boot Webflux](https://docs.spring.io/spring-framework/reference/web/webflux.html)
+- [Spring Data R2DBC](https://spring.io/projects/spring-data-r2dbc)
 - [Spring Data Redis](https://spring.io/projects/spring-data-redis)
 - [Docker](https://docs.docker.com/get-started/)
 - [PostgreSQL](https://www.postgresql.org/docs/13/index.html)
@@ -21,7 +21,7 @@ environment with 1.5vCPUs and 3GB of memory.
 - SOLID
 - API REST
 - Resource optimization
-- Queries with Spring Data JDBC
+- Queries with Spring Data R2DBC
 - Data caching for faster queries
 - Dependency Injection
 - Automated tests
@@ -30,7 +30,7 @@ environment with 1.5vCPUs and 3GB of memory.
 
 ## Get started
 
-In the project, an [example environment variables file](.env) will be available. The project will start using it, if you
+In the project, an [example environment variables file](docker/config/.env) will be available. The project will start using it, if you
 want to change the database user and password, or some other value, feel free
 
 0. Clone git repository with modules

@@ -20,7 +20,6 @@ import br.widsl.rinhabackend.mapper.PersonMapper;
 import br.widsl.rinhabackend.repository.PersonRepository;
 import br.widsl.rinhabackend.service.PersonService;
 import reactor.core.publisher.Flux;
-
 import reactor.core.publisher.Mono;
 
 @Service

@@ -6,10 +6,10 @@ RUN groupadd app && useradd -g app app && \
     mkdir -p "$APP_HOME" && \
     chown -R app:app /home/app && \
     apt update && apt upgrade -y && \
-    apt install openjdk-17-jdk maven -y
+    apt install openjdk-17-jdk maven curl -y
 
-COPY src "$APP_HOME"/src
-COPY pom.xml "$APP_HOME"
+COPY ./app/src "$APP_HOME"/src
+COPY ./app/pom.xml "$APP_HOME"
 
 USER app
 
