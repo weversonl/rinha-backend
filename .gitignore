@@ -1,9 +1,10 @@
 HELP.md
 target/
-.mvn/
-.env.local
+!.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+run.sh
+stop.sh
 
 ### STS ###
 .apt_generated
