@@ -1,11 +1,11 @@
 package br.widsl.rinhabackend.domain.entity;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
-
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Table(value = "persons")
 public class PersonEntity implements Persistable<UUID> {

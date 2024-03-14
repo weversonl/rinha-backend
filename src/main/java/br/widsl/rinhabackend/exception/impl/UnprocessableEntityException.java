@@ -6,8 +6,4 @@ public class UnprocessableEntityException extends RuntimeException {
         super();
     }
 
-    public UnprocessableEntityException(String message) {
-        super(message);
-    }
-
 }

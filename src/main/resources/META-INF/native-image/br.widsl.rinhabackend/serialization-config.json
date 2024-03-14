@@ -1,0 +1,17 @@
+{
+  "types":[
+    {
+      "name": "br.widsl.rinhabackend.domain.dto.PersonDTO"
+    },
+    {
+      "name": "java.util.UUID"
+    },
+    {
+      "name": "java.time.LocalDate"
+    }
+  ],
+  "lambdaCapturingTypes":[
+  ],
+  "proxies":[
+  ]
+}

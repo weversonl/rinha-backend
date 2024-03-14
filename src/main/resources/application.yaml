@@ -1,18 +1,18 @@
+server:
+  port: ${SERVER_PORT:8080}
+  http2:
+    enabled: true
+
 spring:
-  datasource:
+  r2dbc:
     name: rinha-datasource
     url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASS}
-    driver-class-name: ${DB_DRIVER}
 
-    hikari:
-      connection-timeout: ${POOL_DATA_CONNECTION_TIMEOUT:600000}
-      minimum-idle: ${POOL_DATA_MINIMUM_IDLE:1}
-      maximum-pool-size: ${POOL_DATA_MAXIMUM_POOL_SIZE:150}
-      idle-timeout: ${POOL_DATA_IDLE_TIMEOUT:600000}
-      max-lifetime: ${POOL_DATA_MAX_LIFE_TIME:600000}
-      auto-commit: ${POOL_DATA_AUTO_COMMIT:true}
+  jackson:
+    deserialization:
+      accept-float-as-int: false
 
   cache:
     type: ${CACHE_TYPE}
@@ -23,6 +23,3 @@ spring:
       port: ${REDIS_PORT}
       database: ${REDIS_DB}
       timeout: ${REDIS_TIMEOUT}
-
-server:
-  port: ${SERVER_PORT:8080}

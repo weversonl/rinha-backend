@@ -1,0 +1,12 @@
+[
+  {
+    "name": "br.widsl.rinhabackend.annotations.impl.StringArrayValidator",
+    "allPublicMethods": true,
+    "allDeclaredFields": true,
+    "allDeclaredMethods": true,
+    "allDeclaredConstructors": true,
+    "Reachability": [
+      "<init>()"
+    ]
+  }
+]

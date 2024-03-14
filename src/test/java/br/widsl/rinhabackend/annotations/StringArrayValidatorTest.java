@@ -1,4 +1,4 @@
-package br.widsl.rinhabackend.annotations.impl;
+package br.widsl.rinhabackend.annotations;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,7 +7,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import br.widsl.rinhabackend.annotations.StringArray;
+import br.widsl.rinhabackend.annotations.impl.StringArrayValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 class StringArrayValidatorTest {

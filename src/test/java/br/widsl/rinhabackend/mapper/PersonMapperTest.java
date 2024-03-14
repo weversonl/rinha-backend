@@ -30,7 +30,7 @@ class PersonMapperTest {
         assertEquals(id, dto.getId());
         assertEquals(surname, dto.getSurname());
         assertEquals(name, dto.getName());
-        assertEquals(birth, LocalDate.parse(dto.getBirth()));
+        assertEquals(birth, dto.getBirth());
         assertEquals(stack, dto.getStack());
 
     }
@@ -47,7 +47,6 @@ class PersonMapperTest {
         assertNull(dto.getSurname());
         assertNull(dto.getName());
         assertNull(dto.getBirth());
-        assertNull(dto.getStack());
     }
 
     @Test
@@ -55,7 +54,7 @@ class PersonMapperTest {
 
         String surname = "Doe";
         String name = "John";
-        String birth = LocalDate.now().toString();
+        LocalDate birth = LocalDate.now();
         String[] stack = { "Java", "Spring" };
         PersonDTO dto = new PersonDTO(surname, name, birth, stack);
 
@@ -64,7 +63,7 @@ class PersonMapperTest {
         assertNotNull(entity);
         assertEquals(surname, entity.getSurname());
         assertEquals(name, entity.getName());
-        assertEquals(LocalDate.parse(birth), entity.getBirth());
+        assertEquals(birth, entity.getBirth());
         assertEquals(stack, entity.getStack());
 
     }

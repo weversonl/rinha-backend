@@ -1,0 +1,21 @@
+FROM docker.io/ubuntu:22.04
+
+ENV APP_HOME=/home/app/api
+
+RUN groupadd app && useradd -g app app && \
+    mkdir -p "$APP_HOME" && \
+    chown -R app:app /home/app && \
+    apt update && apt upgrade -y && \
+    apt install openjdk-17-jdk maven -y
+
+COPY src "$APP_HOME"/src
+COPY pom.xml "$APP_HOME"
+
+USER app
+
+WORKDIR "$APP_HOME"
+
+RUN mvn clean install && \
+    mv target/app.jar .
+
+ENTRYPOINT [ "java", "-jar", "-Dspring.profiles.active=local","app.jar" ]

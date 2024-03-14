@@ -14,3 +14,7 @@ CREATE TABLE persons (
 CREATE INDEX IF NOT EXISTS idx_persons_concatenated_text_trgm
 ON persons
 USING GIST (terms gist_trgm_ops);
+
+CREATE EXTENSION IF NOT EXISTS pg_prewarm;
+
+SELECT pg_prewarm('persons');

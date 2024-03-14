@@ -1,19 +1,20 @@
 package br.widsl.rinhabackend.service;
 
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
-
 import br.widsl.rinhabackend.domain.dto.PersonCountDTO;
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 public interface PersonService {
 
-    PersonDTO findById(String id);
+    Mono<PersonDTO> findById(String id);
 
-    List<PersonDTO> findByTerm(String term);
+    Flux<PersonDTO> findByTerm(String term);
 
-    CompletableFuture<PersonDTO> savePerson(PersonDTO personDTO);
+    Mono<PersonDTO> savePerson(PersonDTO personDTO);
 
-    PersonCountDTO personCount();
+    Mono<PersonCountDTO> personCount();
+
+    Flux<Void> cleanUpPersons();
 
 }

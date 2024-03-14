@@ -1,7 +1,5 @@
 package br.widsl.rinhabackend.mapper;
 
-import java.time.LocalDate;
-
 import org.springframework.lang.NonNull;
 
 import br.widsl.rinhabackend.domain.dto.PersonDTO;
@@ -19,7 +17,7 @@ public class PersonMapper {
             personDTO.setId(entity.getId());
             personDTO.setName(entity.getName());
             personDTO.setSurname(entity.getSurname());
-            personDTO.setBirth(entity.getBirth().toString());
+            personDTO.setBirth(entity.getBirth());
             personDTO.setStack(entity.getStack());
         }
         return personDTO;
@@ -31,7 +29,7 @@ public class PersonMapper {
             entity.setId(dto.getId());
             entity.setName(dto.getName());
             entity.setSurname(dto.getSurname());
-            entity.setBirth(LocalDate.parse(dto.getBirth()));
+            entity.setBirth(dto.getBirth());
             entity.setStack(dto.getStack());
         }
         return entity;
