@@ -6,9 +6,9 @@ WORKDIR /app
 
 COPY ./app /app
 
-RUN DB_PASS="$DB_PASS" DB_URL="$DB_URL" DB_USER="$DB_USER" \
-    CACHE_TYPE="$CACHE_TYPE" REDIS_HOST="$REDIS_HOST" REDIS_PORT="$REDIS_PORT" \
-    REDIS_DB="$REDIS_DB" REDIS_TIMEOUT="$REDIS_TIMEOUT" \
+RUN DB_URL=r2dbc:postgresql://localhost:5432/rinhadb DB_USER=rinha DB_PASS=rinha \
+    CACHE_TYPE=redis REDIS_HOST=localhost REDIS_PORT=6379 \
+    REDIS_DB=0 REDIS_TIMEOUT=60000 \
     ./mvnw -Pnative native:compile
 
 
